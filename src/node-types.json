@@ -274,6 +274,10 @@
         "named": true
       },
       {
+        "type": "macro_scope_statement",
+        "named": true
+      },
+      {
         "type": "return_statement",
         "named": true
       },
@@ -493,6 +497,10 @@
         },
         {
           "type": "expression",
+          "named": true
+        },
+        {
+          "type": "initializer_list",
           "named": true
         },
         {
@@ -980,6 +988,10 @@
           "named": true
         },
         {
+          "type": "macro_scope_statement",
+          "named": true
+        },
+        {
           "type": "return_statement",
           "named": true
         },
@@ -1300,6 +1312,10 @@
           "named": true
         },
         {
+          "type": "macro_modifier",
+          "named": true
+        },
+        {
           "type": "ms_declspec_modifier",
           "named": true
         },
@@ -1589,6 +1605,10 @@
           "named": true
         },
         {
+          "type": "macro_modifier",
+          "named": true
+        },
+        {
           "type": "ms_declspec_modifier",
           "named": true
         },
@@ -1860,6 +1880,10 @@
         },
         {
           "type": "declaration",
+          "named": true
+        },
+        {
+          "type": "macro_modifier",
           "named": true
         },
         {
@@ -2327,6 +2351,32 @@
     }
   },
   {
+    "type": "macro_scope_statement",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "compound_statement",
+            "named": true
+          }
+        ]
+      },
+      "macro": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "call_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "macro_type_specifier",
     "named": true,
     "fields": {
@@ -2489,6 +2539,10 @@
         },
         {
           "type": "attribute_specifier",
+          "named": true
+        },
+        {
+          "type": "macro_modifier",
           "named": true
         },
         {
@@ -4451,6 +4505,10 @@
   {
     "type": "long",
     "named": false
+  },
+  {
+    "type": "macro_modifier",
+    "named": true
   },
   {
     "type": "ms_restrict_modifier",

@@ -53,6 +53,12 @@ module.exports = grammar({
     [$._top_level_item, $._top_level_statement],
     [$.type_specifier, $._top_level_expression_statement],
     [$.type_qualifier, $.extension_expression],
+    [$.compound_statement, $.initializer_list],
+    [$.comma_expression, $.initializer_pair],
+    [$.comma_expression, $.initializer_list],
+    [$._macro_modifier, $.type_specifier],
+    [$._macro_modifier, $.sized_type_specifier],
+    [$._macro_modifier, $._declarator, $.type_specifier],
   ],
 
   extras: $ => [
@@ -285,8 +291,11 @@ module.exports = grammar({
       $.ms_declspec_modifier,
     ),
 
+    // In a run of identifiers, the last one is the declarator, the one before it is the type, the rest are modifiers.
+    _macro_modifier: $ => prec.dynamic(-1, alias($.identifier, $.macro_modifier)),
+
     _declaration_specifiers: $ => prec.right(seq(
-      repeat($._declaration_modifiers),
+      repeat(choice($._declaration_modifiers, $._macro_modifier)),
       field('type', $.type_specifier),
       repeat($._declaration_modifiers),
     )),
@@ -790,6 +799,7 @@ module.exports = grammar({
       $.attributed_statement,
       $.labeled_statement,
       $.compound_statement,
+      $.macro_scope_statement,
       $.expression_statement,
       $.if_statement,
       $.switch_statement,
@@ -819,6 +829,12 @@ module.exports = grammar({
       $.break_statement,
       $.continue_statement,
       $.goto_statement,
+    ),
+
+    // A macro call followed by a block.
+    macro_scope_statement: $ => seq(
+      field('macro', $.call_expression),
+      field('body', $.compound_statement),
     ),
 
     labeled_statement: $ => seq(
@@ -1197,7 +1213,7 @@ module.exports = grammar({
     extension_expression: $ => seq('__extension__', $.expression),
 
     // The compound_statement is added to parse macros taking statements as arguments, e.g. MYFORLOOP(1, 10, i, { foo(i); bar(i); })
-    argument_list: $ => seq('(', commaSep(choice($.expression, $.compound_statement)), ')'),
+    argument_list: $ => seq('(', commaSep(choice($.expression, $.compound_statement, $.initializer_list)), ')'),
 
     field_expression: $ => seq(
       prec(PREC.FIELD, seq(

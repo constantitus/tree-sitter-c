@@ -3121,6 +3121,19 @@
         }
       ]
     },
+    "_macro_modifier": {
+      "type": "PREC_DYNAMIC",
+      "value": -1,
+      "content": {
+        "type": "ALIAS",
+        "content": {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        "named": true,
+        "value": "macro_modifier"
+      }
+    },
     "_declaration_specifiers": {
       "type": "PREC_RIGHT",
       "value": 0,
@@ -3130,8 +3143,17 @@
           {
             "type": "REPEAT",
             "content": {
-              "type": "SYMBOL",
-              "name": "_declaration_modifiers"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_declaration_modifiers"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_macro_modifier"
+                }
+              ]
             }
           },
           {
@@ -5855,6 +5877,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "macro_scope_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "expression_statement"
         },
         {
@@ -5966,6 +5992,27 @@
         {
           "type": "SYMBOL",
           "name": "goto_statement"
+        }
+      ]
+    },
+    "macro_scope_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "macro",
+          "content": {
+            "type": "SYMBOL",
+            "name": "call_expression"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "body",
+          "content": {
+            "type": "SYMBOL",
+            "name": "compound_statement"
+          }
         }
       ]
     },
@@ -8488,6 +8535,10 @@
                     {
                       "type": "SYMBOL",
                       "name": "compound_statement"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "initializer_list"
                     }
                   ]
                 },
@@ -8510,6 +8561,10 @@
                           {
                             "type": "SYMBOL",
                             "name": "compound_statement"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "initializer_list"
                           }
                         ]
                       }
@@ -9711,6 +9766,31 @@
     [
       "type_qualifier",
       "extension_expression"
+    ],
+    [
+      "compound_statement",
+      "initializer_list"
+    ],
+    [
+      "comma_expression",
+      "initializer_pair"
+    ],
+    [
+      "comma_expression",
+      "initializer_list"
+    ],
+    [
+      "_macro_modifier",
+      "type_specifier"
+    ],
+    [
+      "_macro_modifier",
+      "sized_type_specifier"
+    ],
+    [
+      "_macro_modifier",
+      "_declarator",
+      "type_specifier"
     ]
   ],
   "precedences": [],
